@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('i211168 Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/NUCESFAST/scd-final-lab-exam-MaleehaYounas.git' 
+                git branch: 'main', url: 'https://github.com/NUCESFAST/scd-final-lab-exam-MaleehaYounas' 
             }
         }
         stage('i211168 Build Backend - Auth') {
