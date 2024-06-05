@@ -10,6 +10,17 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/NUCESFAST/scd-final-lab-exam-MaleehaYounas' 
             }
         }
+        stage('i211168 Build Frontend') {
+            steps {
+                dir('Client') {
+                    script {
+                        bat 'npm install'
+                        bat 'npm run build'
+                        bat 'docker build -t %DOCKER_HUB_REPO%:frontend .'
+                    }
+                }
+            }
+        }
         stage('i211168 Build Backend - Auth') {
             steps {
                 dir('Auth') {
