@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./Client
+      dockerfile: Dockerfile
+    ports:
+      - "1168:1168"
+    depends_on:
+      - auth
+      - classrooms
+      - post
+      - event-bus
+
+  auth:
+    build:
+      context: ./Auth
+      dockerfile: Dockerfile
+    ports:
+      - "11681:11681"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/auth
+    depends_on:
+      - mongo
+
+  classrooms:
+    build:
+      context: ./Classrooms
+      dockerfile: Dockerfile
+    ports:
+      - "11682:11681"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/classrooms
+    depends_on:
+      - mongo
+
+  post:
+    build:
+      context: ./Post
+      dockerfile: Dockerfile
+    ports:
+      - "11683:11681"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/post
+    depends_on:
+      - mongo
+
+  event-bus:
+    build:
+      context: ./event-bus
+      dockerfile: Dockerfile
+    ports:
+      - "11684:11681"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/event-bus
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
